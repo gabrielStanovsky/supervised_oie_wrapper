@@ -8,6 +8,7 @@ Outputs predictions identical to those in the onlline demo, with batched gpu opt
 
 * AllenNLP
 * docopt
+* tqdm
 
 Use the following to install requirements:
 
