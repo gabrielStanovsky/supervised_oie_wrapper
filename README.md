@@ -6,6 +6,11 @@ Outputs predictions identical to those in the onlline demo, with batched gpu opt
 
 ## Install prerequisites
 
+* AllenNLP
+* docopt
+
+Use the following to install requirements;:
+
     pip install requirements.txt
 
 ## Run on raw sentences

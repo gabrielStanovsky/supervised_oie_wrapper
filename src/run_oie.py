@@ -7,7 +7,6 @@ from pprint import pprint
 from pprint import pformat
 from docopt import docopt
 import json
-import pdb
 from tqdm import tqdm
 from allennlp.pretrained import open_information_extraction_stanovsky_2018
 from collections import defaultdict
