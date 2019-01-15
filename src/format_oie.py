@@ -93,35 +93,3 @@ def format_extractions(sent_tokens, sent_predictions):
         results.append("\t".join([sent_str, get_frame_str(oie_frame)]))
 
     return results
-
-if __name__ == "__main__":
-    # Parse command line arguments
-    args = docopt(__doc__)
-    inp_fn = args["--in"]
-    out_fn = args["--out"]
-    debug = args["--debug"]
-    if debug:
-        logging.basicConfig(level = logging.DEBUG)
-    else:
-        logging.basicConfig(level = logging.INFO)
-
-    # process sentences
-    logging.info("Processing predictions")
-    predictions_by_sent = defaultdict(list)
-    sents = {}
-    for line in open(inp_fn, encoding = "utf8"):
-        d = json.loads(line.strip())
-        line_ind = int(d["line_ind"])
-        predictions_by_sent[line_ind].append(d["tags"])
-        sents[line_ind] = d["sent"]
-
-    # Combine results
-    logging.info(f"Writing output to {out_fn}")
-    with open(out_fn, "w", encoding="utf8") as fout:
-        for (sent_id, predictions) in tqdm(predictions_by_sent.items()):
-            sent_tokens = [Mock_token(tok) for tok in sents[sent_id].split(" ")]
-            formatted_predictions = format_extractions(sent_tokens, predictions)
-            for cur_str in formatted_predictions:
-                fout.write(f"{sent_id}\t{cur_str}\n")
-
-    logging.info("DONE")
