@@ -2,7 +2,7 @@
 
 This is thin wrapper over [AllenNLP](allennlp.org)'s [pretrained Open IE model](https://demo.allennlp.org/open-information-extraction).
 
-Outputs predictions identical to those in the demo, with batched gpu options.
+Outputs predictions identical to those in the onlline demo, with batched gpu options.
 
 ## Install prerequisites
 
@@ -12,6 +12,8 @@ Outputs predictions identical to those in the demo, with batched gpu options.
 
     cd src
     python run_oie.py --in=path/to/input/file  --batch-size=<batch-size> --out=path/to/output/file [--cuda-device=<cude-device-identifier]
+    
+If `--cuda-device` is not specified, the model will run on the cpu.
 
 ## Input format
 
