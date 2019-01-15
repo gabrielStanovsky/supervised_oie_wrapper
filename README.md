@@ -9,7 +9,7 @@ Outputs predictions identical to those in the onlline demo, with batched gpu opt
 * AllenNLP
 * docopt
 
-Use the following to install requirements;:
+Use the following to install requirements:
 
     pip install requirements.txt
 
