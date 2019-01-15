@@ -13,7 +13,7 @@ Outputs predictions identical to those in the onlline demo, with batched gpu opt
     cd src
     python run_oie.py --in=path/to/input/file  --batch-size=<batch-size> --out=path/to/output/file [--cuda-device=<cude-device-identifier]
     
-If `--cuda-device` is not specified, the model will use the cpu.
+If `--cuda-device` is not specified, the model will run on the cpu.
 
 ## Input format
 
