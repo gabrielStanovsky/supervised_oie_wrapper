@@ -11,7 +11,7 @@ Outputs predictions identical to those in the onlline demo, with batched gpu opt
 
 Use the following to install requirements:
 
-    pip install requirements.txt
+    pip install -r requirements.txt
 
 ## Run on raw sentences
 
