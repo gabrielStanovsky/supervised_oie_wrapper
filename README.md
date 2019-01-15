@@ -31,4 +31,4 @@ Each line pertains to a single OIE extraction:
 
 ## Example
 
-See example of input and output files in src/example.txt and src/example.oie
+See example of input and output files in [src/example.txt](src/example.txt) and [src/example.oie](src/example.oie).
