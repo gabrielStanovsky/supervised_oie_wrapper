@@ -17,7 +17,7 @@ Use the following to install requirements:
 ## Run on raw sentences
 
     cd src
-    python run_oie.py --in=path/to/input/file  --batch-size=<batch-size> --out=path/to/output/file [--cuda-device=<cude-device-identifier]
+    python run_oie.py --in=path/to/input/file  --batch-size=<batch-size> --out=path/to/output/file [--cuda-device=<cude-device-identifier>]
     
 If `--cuda-device` is not specified, the model will run on the cpu.
 
