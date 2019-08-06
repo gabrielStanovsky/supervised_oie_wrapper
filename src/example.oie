@@ -1,6 +1,6 @@
-In December , John decided to join the party .	ARG0:John	V:decided to join	ARG1:the party	ARG2:In December
-Bob agreed to take out the trash .	ARG0:Bob	V:agreed to take out	ARG1:the trash
-Alex Honnold climbed up a New Jersey skyscraper .	ARG0:Alex Honnold	V:climbed up	ARG1:a New Jersey skyscraper
-Albert Einstein , a German theoretical physicist , published the theory of relativity in 1915 .	ARG0:Albert Einstein	V:published	ARG1:the theory of relativity	ARG2:in 1915
-Chair umpire Ramos managed to rob two players in the U.S. Open final .	ARG0:Chair umpire Ramos	V:managed to rob	ARG1:two players	ARG2:in the U.S. Open final
-The CEO of a multi - million dollar company does n't have much free time .	ARG0:The CEO of a multi - million dollar company	V:does n't have	ARG1:much free time
+In December , John decided to join the party .	ARG0:John	V:decided to join	ARG1:the party	ARG2:In December	0.812473166828961
+Bob agreed to take out the trash .	ARG0:Bob	V:agreed to take out	ARG1:the trash	0.9544605053059868
+Alex Honnold climbed up a New Jersey skyscraper .	ARG0:Alex Honnold	V:climbed up	ARG1:a New Jersey skyscraper	0.8046848066803889
+Albert Einstein , a German theoretical physicist , published the theory of relativity in 1915 .	ARG0:Albert Einstein	V:published	ARG1:the theory of relativity	ARG2:in 1915	0.5429271689591637
+Chair umpire Ramos managed to rob two players in the U.S. Open final .	ARG0:Chair umpire Ramos	V:managed to rob	ARG1:two players	ARG2:in the U.S. Open final	0.0018216976710673505
+The CEO of a multi - million dollar company does n't have much free time .	ARG0:The CEO of a multi - million dollar company	V:does n't have	ARG1:much free time	0.15056773929185477
