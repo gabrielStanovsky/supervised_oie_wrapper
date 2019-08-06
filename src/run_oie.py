@@ -7,9 +7,13 @@ from pprint import pprint
 from pprint import pformat
 from docopt import docopt
 import json
+import pdb
 from tqdm import tqdm
 from allennlp.pretrained import open_information_extraction_stanovsky_2018
 from collections import defaultdict
+from operator import itemgetter
+import functools
+import operator
 
 # Local imports
 from format_oie import format_extractions, Mock_token
@@ -38,6 +42,23 @@ def create_instances(model, sent):
                  for pred_id in pred_ids]
 
     return instances
+
+def get_confidence(model, tag_per_token, class_probs):
+    """
+    Get the confidence of a given model in a token list, using the class probabilities
+    associated with this prediction.
+    """
+    token_indexes = [model._model.vocab.get_token_index(tag, namespace = "labels") for tag in tag_per_token]
+
+    # Get probability per tag
+    probs = [class_prob[token_index] for token_index, class_prob in zip(token_indexes, class_probs)]
+
+    # Combine (product)
+    prod_prob = functools.reduce(operator.mul, probs)
+
+    return prod_prob
+
+
 
 if __name__ == "__main__":
     # Parse command line arguments
@@ -84,11 +105,20 @@ if __name__ == "__main__":
             tags = outputs["tags"]
             sent_str = " ".join(sent_tokens)
             assert(len(sent_tokens) == len(tags))
-            predictions_by_sent[sent_str].append(outputs["tags"])
+            predictions_by_sent[sent_str].append((outputs["tags"], outputs["class_probabilities"]))
 
         # Create extractions by sentence
-        for (sent_tokens, predictions_for_sent) in predictions_by_sent.items():
-            oie_lines.extend(format_extractions([Mock_token(tok) for tok in sent_tokens.split(" ")], predictions_for_sent))
+        for sent_tokens, predictions_for_sent in predictions_by_sent.items():
+            raw_tags = list(map(itemgetter(0), predictions_for_sent))
+            class_probs = list(map(itemgetter(1), predictions_for_sent))
+
+            # Compute confidence per extraction
+            confs = [get_confidence(model, tag_per_token, class_prob)
+                     for tag_per_token, class_prob in zip(raw_tags, class_probs)]
+
+            extractions, tags = format_extractions([Mock_token(tok) for tok in sent_tokens.split(" ")], raw_tags)
+
+            oie_lines.extend([extraction + f"\t{conf}" for extraction, conf in zip(extractions, confs)])
 
     # Write to file
     logging.info(f"Writing output to {out_fn}")

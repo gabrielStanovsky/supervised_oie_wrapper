@@ -71,7 +71,6 @@ def format_extractions(sent_tokens, sent_predictions):
     """
     # Consolidate predictions
     if not (len(set(map(len, sent_predictions))) == 1):
-        pdb.set_trace()
         raise AssertionError
     assert len(sent_tokens) == len(sent_predictions[0])
     sent_str = " ".join(map(str, sent_tokens))
@@ -80,10 +79,12 @@ def format_extractions(sent_tokens, sent_predictions):
 
     # Build and return output dictionary
     results = []
+    all_tags = []
 
     for tags in pred_dict.values():
         # Join multi-word predicates
         tags = join_mwp(tags)
+        all_tags.append(tags)
 
         # Create description text
         oie_frame = get_oie_frame(sent_tokens, tags)
@@ -91,4 +92,4 @@ def format_extractions(sent_tokens, sent_predictions):
         # Add a predicate prediction to outputs.
         results.append("\t".join([sent_str, get_frame_str(oie_frame)]))
 
-    return results
+    return results, all_tags
