@@ -34,7 +34,7 @@ def create_instances(model, sent):
 
     # Find all verbs in the input sentence
     pred_ids = [i for (i, t) in enumerate(sent_tokens)
-                if t.pos_ == "VERB"]
+                if t.pos_ == "VERB" or t.pos_ == "AUX"]
 
     # Create instances
     instances = [{"sentence": sent_tokens,
@@ -58,17 +58,11 @@ def get_confidence(model, tag_per_token, class_probs):
 
     return prod_prob
 
+def run_oie(lines, batch_size=64, cuda_device=-1, debug=False):
+    """
+    Run the OIE model and process the output.
+    """
 
-
-if __name__ == "__main__":
-    # Parse command line arguments
-    args = docopt(__doc__)
-    inp_fn = args["--in"]
-    batch_size = int(args["--batch-size"])
-    out_fn = args["--out"]
-    cuda_device = int(args["--cuda-device"]) if (args["--cuda-device"] is not None) \
-                  else -1
-    debug = args["--debug"]
     if debug:
         logging.basicConfig(level = logging.DEBUG)
     else:
@@ -80,9 +74,6 @@ if __name__ == "__main__":
     # Move model to gpu, if requested
     if cuda_device >= 0:
         model._model.cuda(cuda_device)
-
-    lines = [line.strip()
-             for line in open(inp_fn, encoding = "utf8")]
 
     # process sentences
     logging.info("Processing sentences")
@@ -119,10 +110,25 @@ if __name__ == "__main__":
             extractions, tags = format_extractions([Mock_token(tok) for tok in sent_tokens.split(" ")], raw_tags)
 
             oie_lines.extend([extraction + f"\t{conf}" for extraction, conf in zip(extractions, confs)])
+    logging.info("DONE")
+    return oie_lines
+
+if __name__ == "__main__":
+    # Parse command line arguments
+    args = docopt(__doc__)
+    inp_fn = args["--in"]
+    batch_size = int(args["--batch-size"])
+    out_fn = args["--out"]
+    cuda_device = int(args["--cuda-device"]) if (args["--cuda-device"] is not None) \
+                  else -1
+    debug = args["--debug"]
+
+    lines = [line.strip()
+            for line in open(inp_fn, encoding = "utf8")]
+
+    oie_lines = run_oie(lines, batch_size, cuda_device, debug)
 
     # Write to file
     logging.info(f"Writing output to {out_fn}")
     with open(out_fn, "w", encoding = "utf8") as fout:
         fout.write("\n".join(oie_lines))
-
-    logging.info("DONE")
